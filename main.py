@@ -1,7 +1,10 @@
 import pygame
 import sys
 
+keyFlag = False
+
 def initGame():
+    global keyFlag
     # 初期化
     pygame.init()
     global screen
@@ -11,15 +14,24 @@ def initGame():
     runGame()
 
 def runGame():
+    global keyFlag
     # ゲーム
     while True:
+        screen.fill((0, 255, 0))
         update()
         draw()
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_0:
+                    keyFlag = True
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_0:
+                    keyFlag = False
         pygame.display.flip()
 
 def draw():
@@ -30,6 +42,9 @@ def draw():
     font = pygame.font.Font("F:\\Users\\user\\AppData\\Local\\Microsoft\\Windows\\Fonts\\ロゴたいぷゴシック.otf", 40)
     text = font.render("ああ", True, (0, 0, 0))
     screen.blit(text, (600, 300)) # テキスト
+
+    if keyFlag:
+        screen.blit(font.render("押されてます", True, (0,0,0)), (50, 50))
 
 def update():
     pass
